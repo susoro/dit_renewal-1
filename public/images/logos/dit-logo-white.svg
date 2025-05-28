@@ -1,0 +1,18 @@
+<svg width="120" height="40" viewBox="0 0 120 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- D -->
+  <path d="M8 8 L8 32 L18 32 C24 32 28 28 28 20 C28 12 24 8 18 8 L8 8 Z M14 14 L18 14 C20 14 22 16 22 20 C22 24 20 26 18 26 L14 26 L14 14 Z" fill="white"/>
+  
+  <!-- I -->
+  <rect x="36" y="8" width="6" height="24" fill="white"/>
+  
+  <!-- T -->
+  <rect x="50" y="8" width="20" height="6" fill="white"/>
+  <rect x="57" y="8" width="6" height="24" fill="white"/>
+  
+  <!-- Subtitle -->
+  <text x="8" y="38" font-family="Arial, sans-serif" font-size="8" fill="#ccc">Digital IT Solutions</text>
+  
+  <!-- Accent -->
+  <circle cx="76" cy="20" r="3" fill="#2CB693"/>
+  <rect x="82" y="18" width="12" height="4" rx="2" fill="#2CB693" opacity="0.5"/>
+</svg> 
