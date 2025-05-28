@@ -1,5 +1,8 @@
 import type { Metadata } from 'next'
+import localFont from 'next/font/local'
 import './globals.css'
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/react'
 
 export const metadata: Metadata = {
   title: 'DIT 홈페이지',
@@ -23,6 +26,8 @@ export default function RootLayout({
         />
       </head>
       <body>{children}</body>
+      <Analytics />
+      <SpeedInsights />
     </html>
   )
 }

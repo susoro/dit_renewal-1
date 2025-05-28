@@ -1,5 +1,6 @@
 'use client'
 
+import type { NextPage } from 'next'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -13,7 +14,7 @@ import {
   Network,
   Phone,
   Download,
-  HeadphonesIcon,
+  Headphones as HeadphonesIcon,
   Play,
   Clock,
   Shield,
@@ -27,13 +28,99 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 import { useEffect, useState } from "react"
+import { submitContactForm, type ContactFormData } from "@/actions/contact"
 
-export default function DITMaintenancePage() {
+const DITMaintenancePage: NextPage = () => {
   const [isMounted, setIsMounted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState<{type: 'success' | 'error', message: string} | null>(null)
+
+  // Form state
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    emailDomain: 'naver.com',
+    phone1: '',
+    phone2: '',
+    phone3: '',
+    content: ''
+  })
 
   useEffect(() => {
     setIsMounted(true)
   }, [])
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    
+    console.log('🔄 Form submission started')
+    console.log('📝 Form data:', formData)
+    
+    if (!formData.name || !formData.email || !formData.phone1 || !formData.phone2 || !formData.phone3) {
+      console.log('❌ Validation failed: missing required fields')
+      setSubmitMessage({
+        type: 'error',
+        message: '필수 항목을 모두 입력해주세요.'
+      })
+      return
+    }
+
+    setIsSubmitting(true)
+    setSubmitMessage(null)
+
+    try {
+      const contactData: ContactFormData = {
+        name: formData.name,
+        email: `${formData.email}@${formData.emailDomain}`,
+        phone: `${formData.phone1}-${formData.phone2}-${formData.phone3}`,
+        content: formData.content
+      }
+
+      console.log('📤 Sending contact data:', contactData)
+      const result = await submitContactForm(contactData)
+      console.log('📥 Received result:', result)
+      
+      if (result.success) {
+        console.log('✅ Form submission successful')
+        setSubmitMessage({
+          type: 'success',
+          message: result.message
+        })
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          emailDomain: 'naver.com',
+          phone1: '',
+          phone2: '',
+          phone3: '',
+          content: ''
+        })
+      } else {
+        console.log('❌ Form submission failed:', result.error)
+        setSubmitMessage({
+          type: 'error',
+          message: result.message
+        })
+      }
+    } catch (error) {
+      console.error('❌ Unexpected error during form submission:', error)
+      setSubmitMessage({
+        type: 'error',
+        message: '문의 접수 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.'
+      })
+    } finally {
+      setIsSubmitting(false)
+      console.log('🏁 Form submission completed')
+    }
+  }
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }))
+  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -89,7 +176,7 @@ export default function DITMaintenancePage() {
       </div>
 
       {/* Hero Section */}
-      <section className="relative py-24 overflow-hidden">
+      <section className="relative min-h-[100vh] md:min-h-[90vh] lg:min-h-[85vh] py-16 md:py-20 lg:py-24 overflow-hidden">
         {/* Background Elements */}
         <div className="absolute inset-0 bg-gray-50"></div>
         <div className="absolute top-20 right-20 w-72 h-72 bg-[#FF2B4C]/10 rounded-full blur-3xl"></div>
@@ -159,7 +246,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* Company Introduction */}
-      <section id="company" className="py-20 bg-gray-50">
+      <section id="company" className="min-h-[80vh] md:min-h-[75vh] lg:min-h-[70vh] py-12 md:py-16 lg:py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -253,7 +340,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* Service Areas */}
-      <section id="services" className="py-20 bg-white">
+      <section id="services" className="min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-12 md:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -374,7 +461,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* Client Companies */}
-      <section className="py-20 bg-gray-50">
+      <section className="min-h-[50vh] md:min-h-[45vh] lg:min-h-[40vh] py-12 md:py-16 lg:py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -467,7 +554,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* Technology & Differentiation */}
-      <section className="py-20 bg-white">
+      <section className="min-h-[80vh] md:min-h-[75vh] lg:min-h-[70vh] py-12 md:py-16 lg:py-20 bg-white">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -549,7 +636,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* Pricing & Contact */}
-      <section id="contact" className="py-20 bg-gray-50">
+      <section id="contact" className="min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-12 md:py-16 lg:py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -575,7 +662,7 @@ export default function DITMaintenancePage() {
                   <CardTitle className="text-2xl font-bold text-gray-900 mb-2">상담 문의하기</CardTitle>
                 </CardHeader>
                 <CardContent className="px-0 space-y-6">
-                  <div className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <label className="text-sm font-medium text-gray-900 mb-2 block">
                         이름 <span className="text-red-500">*</span>
@@ -583,6 +670,9 @@ export default function DITMaintenancePage() {
                       <Input 
                         placeholder="이름을 입력하세요" 
                         className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg h-12 bg-gray-50" 
+                        value={formData.name}
+                        onChange={(e) => handleInputChange('name', e.target.value)}
+                        required
                       />
                     </div>
                     
@@ -595,6 +685,9 @@ export default function DITMaintenancePage() {
                           <Input 
                             placeholder="이메일을 입력하세요" 
                             className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg h-12 bg-gray-50" 
+                            value={formData.email}
+                            onChange={(e) => handleInputChange('email', e.target.value)}
+                            required
                           />
                         </div>
                         <span id="middle" className="text-gray-500 font-medium">
@@ -606,6 +699,8 @@ export default function DITMaintenancePage() {
                             name="email_address" 
                             title="이메일 선택" 
                             className="w-full h-12 border border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg bg-gray-50 px-3 text-sm text-gray-700"
+                            value={formData.emailDomain}
+                            onChange={(e) => handleInputChange('emailDomain', e.target.value)}
                           >
                             <option value="naver.com">naver.com</option>
                             <option value="gmail.com">gmail.com</option>
@@ -629,6 +724,9 @@ export default function DITMaintenancePage() {
                             placeholder="010"
                             maxLength={3}
                             className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg h-12 bg-gray-50 text-center no-spinner" 
+                            value={formData.phone1}
+                            onChange={(e) => handleInputChange('phone1', e.target.value)}
+                            required
                           />
                         </div>
                         <span className="text-gray-500 font-medium">-</span>
@@ -638,6 +736,9 @@ export default function DITMaintenancePage() {
                             placeholder="0000"
                             maxLength={4}
                             className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg h-12 bg-gray-50 text-center no-spinner" 
+                            value={formData.phone2}
+                            onChange={(e) => handleInputChange('phone2', e.target.value)}
+                            required
                           />
                         </div>
                         <span className="text-gray-500 font-medium">-</span>
@@ -647,6 +748,9 @@ export default function DITMaintenancePage() {
                             placeholder="0000"
                             maxLength={4}
                             className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg h-12 bg-gray-50 text-center no-spinner" 
+                            value={formData.phone3}
+                            onChange={(e) => handleInputChange('phone3', e.target.value)}
+                            required
                           />
                         </div>
                       </div>
@@ -658,17 +762,25 @@ export default function DITMaintenancePage() {
                         placeholder="의뢰내용에 대해 설명해주세요"
                         rows={6}
                         className="border-gray-200 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 rounded-lg bg-gray-50 resize-none"
+                        value={formData.content}
+                        onChange={(e) => handleInputChange('content', e.target.value)}
                       />
                     </div>
-                  </div>
+                    
+                    <Button 
+                      type="submit"
+                      className="w-full bg-[#232324] hover:bg-[#232324]/90 text-white h-12 rounded-full font-medium"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? '전송중...' : '문의하기'}
+                    </Button>
+                  </form>
                   
-                  <Button 
-                    className="w-full bg-[#232324] hover:bg-[#232324]/90 text-white h-12 rounded-full font-medium"
-                  >
-                    문의하기
-                  </Button>
-                  
-
+                  {submitMessage && (
+                    <div className={`mt-4 p-3 rounded-lg text-center ${submitMessage.type === 'success' ? 'bg-green-100 text-green-700 border border-green-200' : 'bg-red-100 text-red-700 border border-red-200'}`}>
+                      {submitMessage.message}
+                    </div>
+                  )}
                 </CardContent>
               </Card>
             </ScrollAnimation>
@@ -698,7 +810,7 @@ export default function DITMaintenancePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-white text-gray-900 relative overflow-hidden">
+      <section className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] py-12 md:py-16 lg:py-20 bg-white text-gray-900 relative overflow-hidden">
         <div className="container mx-auto px-6 text-center relative z-10">
           <ScrollAnimation animation="fadeInUp">
             <h2 className="text-4xl mb-6 text-gray-900 font-weight-500">
@@ -782,5 +894,7 @@ export default function DITMaintenancePage() {
     </div>
   )
 }
+
+export default DITMaintenancePage
 
 
