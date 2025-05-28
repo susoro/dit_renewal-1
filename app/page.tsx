@@ -27,6 +27,7 @@ import {
   Mail,
 } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image"
 import { useEffect, useState } from "react"
 import { submitContactForm, type ContactFormData } from "@/actions/contact"
 
@@ -129,7 +130,13 @@ const DITMaintenancePage: NextPage = () => {
         <div className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div>
-              <div className="font-bold text-xl text-gray-900">DIT</div>
+              <Image
+                src="/DIT.svg"
+                alt="DIT Logo"
+                width={88}
+                height={35}
+                priority
+              />
             </div>
           </div>
           <nav className="hidden md:flex space-x-8">
@@ -176,77 +183,55 @@ const DITMaintenancePage: NextPage = () => {
       </div>
 
       {/* Hero Section */}
-      <section className="relative min-h-[100vh] md:min-h-[90vh] lg:min-h-[85vh] py-16 md:py-20 lg:py-24 overflow-hidden">
-        {/* Background Elements */}
-        <div className="absolute inset-0 bg-gray-50"></div>
+      <section className="relative min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] py-12 md:py-16 lg:py-20 overflow-hidden">
+        {/* Video Background */}
+        <div className="absolute inset-0">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src="/main.mp4" type="video/mp4" />
+            {/* Fallback background */}
+            <div className="w-full h-full bg-gray-50"></div>
+          </video>
+          {/* Video overlay for better text readability */}
+          <div className="absolute inset-0"></div>
+        </div>
+        
+        {/* Decorative elements (optional - can be removed if video provides enough visual interest) */}
         <div className="absolute top-20 right-20 w-72 h-72 bg-[#FF2B4C]/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#FF2B4C]/10 rounded-full blur-3xl"></div>
 
-        <div className="container mx-auto px-6 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
-              <ScrollAnimation animation="fadeInLeft">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-semibold mb-6 text-[#232324] leading-tight">
-                <span className="text-[#FF2B4C]">Business Value</span><br />
-                  DIT가 이끌어 냅니다
-                  <br />
+        <div className="container mx-auto px-6 relative z-10 h-full">
+          <div className="flex items-center justify-center min-h-[50vh] text-center">
+            <div className="max-w-4xl mx-auto">
+              <ScrollAnimation animation="fadeInUp">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-12 text-white leading-tight">
+                  <span className="text-[#FF2B4C]">Business Value</span><br />
+                  <span className="text-[#232324]">DIT가 이끌어 냅니다</span>
                 </h1>
               </ScrollAnimation>
 
-              <ScrollAnimation animation="fadeInLeft" delay={200}>
-                <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <ScrollAnimation animation="fadeInUp" delay={200}>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
                   <Button
                     size="lg"
-                    className="bg-[#232324] hover:bg-[#232324]/90 text-white text-lg px-8 py-4 shadow-lg border-radius-50"
+                    className="bg-[#232324] hover:bg-[#232324]/90 text-white text-lg px-8 py-4 shadow-lg rounded-full"
                   >
                     솔루션 문의하기
                   </Button>
                 </div>
               </ScrollAnimation>
-
-              {/* Stats */}
-            
             </div>
-
-            {/* 3D Visual Element */}
-            <ScrollAnimation animation="fadeInRight" delay={300}>
-              <div className="relative">
-                <div className="relative w-full h-96 flex items-center justify-center">
-                  {/* Main 3D Object */}
-                  <div className="relative w-64 h-64">
-                    <div className={`absolute inset-0 bg-[#FF2B4C]/20 rounded-full blur-xl ${isMounted ? 'animate-pulse' : ''}`}></div>
-                    <div className={`absolute inset-4 bg-[#FF2B4C]/30 rounded-full blur-lg ${isMounted ? 'animate-pulse delay-75' : ''}`}></div>
-                    <div className={`absolute inset-8 bg-[#FF2B4C]/40 rounded-full blur-md ${isMounted ? 'animate-pulse delay-150' : ''}`}></div>
-                    <div className="absolute inset-12 bg-[#FF2B4C] rounded-full shadow-2xl"></div>
-
-                    {/* Floating Elements */}
-                    <div className={`absolute -top-4 -right-4 w-16 h-16 bg-[#FF2B4C] rounded-full opacity-80 ${isMounted ? 'animate-bounce' : ''} flex items-center justify-center`}>
-                      <Monitor className="w-8 h-8 text-white" />
-                    </div>
-                    <div className={`absolute -bottom-6 -left-6 w-12 h-12 bg-[#2CB693] rounded-full opacity-80 ${isMounted ? 'animate-bounce delay-300' : ''} flex items-center justify-center`}>
-                      <Database className="w-6 h-6 text-white" />
-                    </div>
-                    <div className={`absolute top-1/2 -right-8 w-8 h-8 bg-[#232324] rounded-full opacity-80 ${isMounted ? 'animate-bounce delay-500' : ''} flex items-center justify-center`}>
-                      <Network className="w-4 h-4 text-white" />
-                    </div>
-                  </div>
-
-                  {/* Orbiting Elements */}
-                  <div className={`absolute inset-0 ${isMounted ? 'animate-spin-slow' : ''}`}>
-                    <div className="absolute top-0 left-1/2 w-4 h-4 bg-[#FF2B4C] rounded-full transform -translate-x-1/2"></div>
-                  </div>
-                  <div className={`absolute inset-0 ${isMounted ? 'animate-spin-reverse' : ''}`}>
-                    <div className="absolute bottom-0 left-1/2 w-3 h-3 bg-[#2CB693] rounded-full transform -translate-x-1/2"></div>
-                  </div>
-                </div>
-              </div>
-            </ScrollAnimation>
           </div>
         </div>
       </section>
 
       {/* Company Introduction */}
-      <section id="company" className="min-h-[80vh] md:min-h-[75vh] lg:min-h-[70vh] py-12 md:py-16 lg:py-20 bg-gray-50">
+      <section id="company" className="min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-16 md:py-20 lg:py-24 bg-gray-50">
         <div className="container mx-auto px-6">
           <ScrollAnimation animation="fadeInUp">
             <div className="text-center mb-16">
@@ -554,83 +539,85 @@ const DITMaintenancePage: NextPage = () => {
       </section>
 
       {/* Technology & Differentiation */}
-      <section className="min-h-[80vh] md:min-h-[75vh] lg:min-h-[70vh] py-12 md:py-16 lg:py-20 bg-white">
-        <div className="container mx-auto px-6">
-          <ScrollAnimation animation="fadeInUp">
-            <div className="text-center mb-16">
-              <h2 className="text-4xl mb-6 text-gray-900 font-weight-500">
-                <span className="text-[#FF2B4C]">기술 역량</span> 및 차별성
-              </h2>
-              <p className="text-lg text-gray-600">검증된 기술력과 차별화된 서비스로 고객의 성공을 이끕니다</p>
+      <section className="min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-16 md:py-20 lg:py-24 bg-white">
+        <div className="container mx-auto px-6 h-full">
+          <div className="flex flex-col justify-center min-h-[70vh]">
+            <ScrollAnimation animation="fadeInUp">
+              <div className="text-center mb-16">
+                <h2 className="text-4xl mb-6 text-gray-900 font-weight-500">
+                  <span className="text-[#FF2B4C]">기술 역량</span> 및 차별성
+                </h2>
+                <p className="text-lg text-gray-600">검증된 기술력과 차별화된 서비스로 고객의 성공을 이끕니다</p>
+              </div>
+            </ScrollAnimation>
+
+            <div className="grid lg:grid-cols-3 gap-8">
+              <ScrollAnimation animation="fadeInUp" delay={100}>
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <div className="w-16 h-16 bg-[#FF2B4C]/10 rounded-2xl flex items-center justify-center mb-6">
+                    <Shield className="w-8 h-8 text-[#FF2B4C]" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[#232324]">보안 전문성</h3>
+                  <p className="text-gray-600 mb-4">
+                    ISO 27001 인증 기반의 체계적인 보안 관리와 24시간 보안 모니터링 서비스
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      보안 취약점 진단 및 대응
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      침입 탐지 및 차단 시스템
+                    </li>
+                  </ul>
+                </Card>
+              </ScrollAnimation>
+
+              <ScrollAnimation animation="fadeInUp" delay={200}>
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <div className="w-16 h-16 bg-[#2CB693]/10 rounded-2xl flex items-center justify-center mb-6">
+                    <Clock className="w-8 h-8 text-[#2CB693]" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[#232324]">신속한 대응</h3>
+                  <p className="text-gray-600 mb-4">
+                    평균 15분 이내 1차 대응, 4시간 이내 현장 출동으로 비즈니스 중단 최소화
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      24/7 원격 모니터링
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      긴급 상황 즉시 대응
+                    </li>
+                  </ul>
+                </Card>
+              </ScrollAnimation>
+
+              <ScrollAnimation animation="fadeInUp" delay={300}>
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                  <div className="w-16 h-16 bg-[#232324]/10 rounded-2xl flex items-center justify-center mb-6">
+                    <TrendingUp className="w-8 h-8 text-[#232324]" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-[#232324]">비용 최적화</h3>
+                  <p className="text-gray-600 mb-4">
+                    예방 정비를 통한 장애 사전 차단으로 총 운영비용(TCO) 30% 절감 효과
+                  </p>
+                  <ul className="space-y-2 text-sm text-gray-600">
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      예측 기반 유지보수
+                    </li>
+                    <li className="flex items-center">
+                      <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
+                      투명한 비용 구조
+                    </li>
+                  </ul>
+                </Card>
+              </ScrollAnimation>
             </div>
-          </ScrollAnimation>
-
-          <div className="grid lg:grid-cols-3 gap-8 mb-16">
-            <ScrollAnimation animation="fadeInUp" delay={100}>
-              <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-[#FF2B4C]/10 rounded-2xl flex items-center justify-center mb-6">
-                  <Shield className="w-8 h-8 text-[#FF2B4C]" />
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-[#232324]">보안 전문성</h3>
-                <p className="text-gray-600 mb-4">
-                  ISO 27001 인증 기반의 체계적인 보안 관리와 24시간 보안 모니터링 서비스
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    보안 취약점 진단 및 대응
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    침입 탐지 및 차단 시스템
-                  </li>
-                </ul>
-              </Card>
-            </ScrollAnimation>
-
-            <ScrollAnimation animation="fadeInUp" delay={200}>
-              <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-[#2CB693]/10 rounded-2xl flex items-center justify-center mb-6">
-                  <Clock className="w-8 h-8 text-[#2CB693]" />
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-[#232324]">신속한 대응</h3>
-                <p className="text-gray-600 mb-4">
-                  평균 15분 이내 1차 대응, 4시간 이내 현장 출동으로 비즈니스 중단 최소화
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    24/7 원격 모니터링
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    긴급 상황 즉시 대응
-                  </li>
-                </ul>
-              </Card>
-            </ScrollAnimation>
-
-            <ScrollAnimation animation="fadeInUp" delay={300}>
-              <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 bg-[#232324]/10 rounded-2xl flex items-center justify-center mb-6">
-                  <TrendingUp className="w-8 h-8 text-[#232324]" />
-                </div>
-                <h3 className="text-xl font-bold mb-4 text-[#232324]">비용 최적화</h3>
-                <p className="text-gray-600 mb-4">
-                  예방 정비를 통한 장애 사전 차단으로 총 운영비용(TCO) 30% 절감 효과
-                </p>
-                <ul className="space-y-2 text-sm text-gray-600">
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    예측 기반 유지보수
-                  </li>
-                  <li className="flex items-center">
-                    <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
-                    투명한 비용 구조
-                  </li>
-                </ul>
-              </Card>
-            </ScrollAnimation>
           </div>
         </div>
       </section>
@@ -787,21 +774,21 @@ const DITMaintenancePage: NextPage = () => {
             
             {/* Contact Info */}
             <ScrollAnimation animation="fadeInUp" delay={400}>
-              <div className="grid md:grid-cols-2 gap-8 mt-12">
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 bg-[#232324]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Phone className="w-8 h-8 text-[#232324]" />
+              <div className="grid md:grid-cols-2 gap-6 mt-12">
+                <div className="text-center p-6 bg-gray-50 rounded-[4px] hover:bg-gray-100 transition-all duration-300 cursor-pointer group">
+                  <div className="w-12 h-12 bg-[#232324]/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#232324]/20 transition-colors duration-300">
+                    <Phone className="w-5 h-5 text-[#232324] group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">전화 문의</h3>
-                  <p className="text-gray-600 text-lg">1833-8373</p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#232324] transition-colors duration-300">전화 문의</h3>
+                  <p className="text-gray-600 text-base font-medium group-hover:text-[#232324] transition-colors duration-300">1000-8373</p>
                 </div>
                 
-                <div className="text-center p-6">
-                  <div className="w-16 h-16 bg-[#232324]/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Mail className="w-8 h-8 text-[#232324]" />
+                <div className="text-center p-6 bg-gray-50 rounded-[4px] hover:bg-gray-100 transition-all duration-300 cursor-pointer group">
+                  <div className="w-12 h-12 bg-[#232324]/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-[#232324]/20 transition-colors duration-300">
+                    <Mail className="w-5 h-5 text-[#232324] group-hover:scale-110 transition-transform duration-300" />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">이메일 문의</h3>
-                  <p className="text-gray-600 text-lg">dit@dit.co</p>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-[#232324] transition-colors duration-300">이메일 문의</h3>
+                  <p className="text-gray-600 text-base font-medium group-hover:text-[#232324] transition-colors duration-300">dit@dit.co</p>
                 </div>
               </div>
             </ScrollAnimation>
@@ -811,82 +798,94 @@ const DITMaintenancePage: NextPage = () => {
 
       {/* CTA Section */}
       <section className="min-h-[70vh] md:min-h-[65vh] lg:min-h-[60vh] py-12 md:py-16 lg:py-20 bg-white text-gray-900 relative overflow-hidden">
-        <div className="container mx-auto px-6 text-center relative z-10">
-          <ScrollAnimation animation="fadeInUp">
-            <h2 className="text-4xl mb-6 text-gray-900 font-weight-500">
-              지금 바로 DIT와 함께
-              <br />
-              안정적인 IT 운영을 시작하세요
-            </h2>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-[#FF2B4C] text-white hover:bg-[#FF2B4C]/90 text-lg px-8 py-4 shadow-lg border-radius-50">
-                <Phone className="w-5 h-5 mr-2" />
-                무료 상담 신청
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-[#232324] text-[#232324] hover:bg-[#232324] hover:text-white text-lg px-8 py-4 border-radius-50"
-              >
-                <Download className="w-5 h-5 mr-2" />
-                회사 브로슈어 다운로드
-              </Button>
+        <div className="container mx-auto px-6 relative z-10 h-full">
+          <div className="flex items-center justify-center min-h-[50vh] text-center">
+            <div className="max-w-4xl mx-auto">
+              <ScrollAnimation animation="fadeInUp">
+                <h2 className="text-4xl mb-8 text-gray-900 font-weight-500">
+                  지금 바로 DIT와 함께
+                  <br />
+                  안정적인 IT 운영을 시작하세요
+                </h2>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button size="lg" className="bg-[#FF2B4C] text-white hover:bg-[#FF2B4C]/90 text-lg px-8 py-4 shadow-lg border-radius-50">
+                    <Phone className="w-5 h-5 mr-2" />
+                    무료 상담 신청
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-[#232324] text-[#232324] hover:bg-[#232324] hover:text-white text-lg px-8 py-4 border-radius-50"
+                  >
+                    <Download className="w-5 h-5 mr-2" />
+                    회사 브로슈어 다운로드
+                  </Button>
+                </div>
+              </ScrollAnimation>
             </div>
-          </ScrollAnimation>
+          </div>
         </div>
       </section>
 
       {/* Footer */}
       <footer className="bg-[#232324] text-white py-12">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div>
-              <div className="flex items-center space-x-3 mb-4">
-                <div>
-                  <div className="font-bold text-xl">DIT</div>
-                  <ul className="space-y-2 text-sm text-gray-400 mt-4">
-                    <li>1833-8373</li>
-                    <li>dit@dit.co</li>
-                    <li>서울시 강남구 테헤란로 123</li>
-                    <li>www.dit.co</li>
-                  </ul>
+          <div className="max-w-6xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-8">
+              <div>
+                <div className="flex items-center space-x-3 mb-4">
+                  <div>
+                    <Image
+                      src="/DIT.svg"
+                      alt="DIT Logo"
+                      width={88}
+                      height={35}
+                      className="invert"
+                    />
+                    <ul className="space-y-2 text-sm text-gray-400 mt-4">
+                      <li>1833-8373</li>
+                      <li>dit@dit.co</li>
+                      <li>서울시 강남구 테헤란로 123</li>
+                      <li>www.dittest.com</li>
+                    </ul>
+                  </div>
                 </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-4">서비스</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>하드웨어 유지보수</li>
+                  <li>소프트웨어 유지보수</li>
+                  <li>네트워크 유지보수</li>
+                  <li>통합 관리 서비스</li>
+                </ul>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-4">지원</h4>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li>24/7 기술 지원</li>
+                  <li>온라인 상담</li>
+                  <li>기술 문서</li>
+                  <li>교육 프로그램</li>
+                </ul>
               </div>
             </div>
 
-            <div>
-              <h4 className="font-semibold mb-4">서비스</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>하드웨어 유지보수</li>
-                <li>소프트웨어 유지보수</li>
-                <li>네트워크 유지보수</li>
-                <li>통합 관리 서비스</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-semibold mb-4">지원</h4>
-              <ul className="space-y-2 text-sm text-gray-400">
-                <li>24/7 기술 지원</li>
-                <li>온라인 상담</li>
-                <li>기술 문서</li>
-                <li>교육 프로그램</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-gray-400">&copy; 2025 DITh2. All rights reserved.</p>
-            <div className="flex space-x-4 mt-4 md:mt-0">
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
-                개인정보처리방침
-              </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
-                이용약관
-              </Link>
-              <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
-                사업자정보
-              </Link>
+            <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+              <p className="text-sm text-gray-400">&copy; 2025 DITh2. All rights reserved.</p>
+              <div className="flex space-x-4 mt-4 md:mt-0">
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  개인정보처리방침
+                </Link>
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  이용약관
+                </Link>
+                <Link href="#" className="text-gray-400 hover:text-white transition-colors text-sm">
+                  사업자정보
+                </Link>
+              </div>
             </div>
           </div>
         </div>
