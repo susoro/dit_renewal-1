@@ -69,24 +69,45 @@ const DITMaintenancePage: NextPage = () => {
     setSubmitMessage(null)
 
     try {
-      // 클라이언트 사이드에서만 처리 (실제 배포시에는 API 연동 필요)
-      await new Promise(resolve => setTimeout(resolve, 1000)) // 시뮬레이션
+      const contactData = {
+        name: formData.name,
+        email: `${formData.email}@${formData.emailDomain}`,
+        phone: `${formData.phone1}-${formData.phone2}-${formData.phone3}`,
+        content: formData.content
+      }
+
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      })
+
+      const result = await response.json()
       
-      console.log('✅ Form submission successful')
-      setSubmitMessage({
-        type: 'success',
-        message: '문의가 성공적으로 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.'
-      })
-      // Reset form
-      setFormData({
-        name: '',
-        email: '',
-        emailDomain: 'naver.com',
-        phone1: '',
-        phone2: '',
-        phone3: '',
-        content: ''
-      })
+      if (result.success) {
+        console.log('✅ Form submission successful')
+        setSubmitMessage({
+          type: 'success',
+          message: result.message
+        })
+        // Reset form
+        setFormData({
+          name: '',
+          email: '',
+          emailDomain: 'naver.com',
+          phone1: '',
+          phone2: '',
+          phone3: '',
+          content: ''
+        })
+      } else {
+        setSubmitMessage({
+          type: 'error',
+          message: result.message
+        })
+      }
     } catch (error) {
       console.error('❌ Unexpected error during form submission:', error)
       setSubmitMessage({
