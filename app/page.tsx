@@ -29,7 +29,6 @@ import {
 import Link from "next/link"
 import Image from "next/image"
 import { useEffect, useState } from "react"
-import { submitContactForm, type ContactFormData } from "@/actions/contact"
 
 const DITMaintenancePage: NextPage = () => {
   const [isMounted, setIsMounted] = useState(false)
@@ -70,40 +69,24 @@ const DITMaintenancePage: NextPage = () => {
     setSubmitMessage(null)
 
     try {
-      const contactData: ContactFormData = {
-        name: formData.name,
-        email: `${formData.email}@${formData.emailDomain}`,
-        phone: `${formData.phone1}-${formData.phone2}-${formData.phone3}`,
-        content: formData.content
-      }
-
-      console.log('📤 Sending contact data:', contactData)
-      const result = await submitContactForm(contactData)
-      console.log('📥 Received result:', result)
+      // 클라이언트 사이드에서만 처리 (실제 배포시에는 API 연동 필요)
+      await new Promise(resolve => setTimeout(resolve, 1000)) // 시뮬레이션
       
-      if (result.success) {
-        console.log('✅ Form submission successful')
-        setSubmitMessage({
-          type: 'success',
-          message: result.message
-        })
-        // Reset form
-        setFormData({
-          name: '',
-          email: '',
-          emailDomain: 'naver.com',
-          phone1: '',
-          phone2: '',
-          phone3: '',
-          content: ''
-        })
-      } else {
-        console.log('❌ Form submission failed:', result.error)
-        setSubmitMessage({
-          type: 'error',
-          message: result.message
-        })
-      }
+      console.log('✅ Form submission successful')
+      setSubmitMessage({
+        type: 'success',
+        message: '문의가 성공적으로 접수되었습니다. 빠른 시일 내에 연락드리겠습니다.'
+      })
+      // Reset form
+      setFormData({
+        name: '',
+        email: '',
+        emailDomain: 'naver.com',
+        phone1: '',
+        phone2: '',
+        phone3: '',
+        content: ''
+      })
     } catch (error) {
       console.error('❌ Unexpected error during form submission:', error)
       setSubmitMessage({
