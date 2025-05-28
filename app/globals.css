@@ -92,3 +92,68 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* Logo scroll animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
+
+/* Custom styles */
+h2 {
+  line-height: 1.25;
+}
+
+.font-weight-500 {
+  font-weight: 500;
+}
+
+.font-weight-400 {
+  font-weight: 400;
+}
+
+.border-radius-50 {
+  border-radius: 50px;
+}
+
+.nav-link {
+  font-weight: 400;
+  color: #595959;
+  font-size: 16px;
+}
+
+.nav-link:hover {
+  color: #FF2B4C !important;
+}
+
+/* Remove number input spinners */
+.no-spinner {
+  -moz-appearance: textfield;
+}
+
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Animation duration classes */
+.animate-spin-slow {
+  animation: spin 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin 15s linear infinite reverse;
+}
