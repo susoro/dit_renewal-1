@@ -46,8 +46,29 @@ const DITMaintenancePage: NextPage = () => {
     content: ''
   })
 
+  // Responsive font size function
+  const getSubtitleFontSize = () => {
+    if (typeof window !== 'undefined') {
+      const width = window.innerWidth
+      if (width >= 1024) return '21px'
+      if (width >= 768) return '19px'
+      return '17px'
+    }
+    return '17px'
+  }
+
+  const [subtitleFontSize, setSubtitleFontSize] = useState('17px')
+
   useEffect(() => {
     setIsMounted(true)
+    setSubtitleFontSize(getSubtitleFontSize())
+    
+    const handleResize = () => {
+      setSubtitleFontSize(getSubtitleFontSize())
+    }
+    
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -129,65 +150,8 @@ const DITMaintenancePage: NextPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-gray-100">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div>
-              <Image
-                src="/DIT.svg"
-                alt="DIT Logo"
-                width={88}
-                height={35}
-                priority
-              />
-            </div>
-          </div>
-          <nav className="hidden md:flex space-x-8">
-            <Link 
-              href="#company" 
-              className="nav-link transition-colors"
-            >
-              회사소개
-            </Link>
-            <Link 
-              href="#services" 
-              className="nav-link transition-colors"
-            >
-              서비스
-            </Link>
-            <Link 
-              href="#technology" 
-              className="nav-link transition-colors"
-            >
-              기술역량
-            </Link>
-            <Link 
-              href="#portfolio" 
-              className="nav-link transition-colors"
-            >
-              고객사례
-            </Link>
-          </nav>
-          <Button className="bg-[#232324] hover:bg-[#232324]/90 text-white shadow-lg border-radius-50">
-            문의하기
-          </Button>
-        </div>
-      </header>
-
-      {/* Floating CTA */}
-      <div className="fixed bottom-6 right-6 z-50">
-        <Button
-          size="lg"
-          className={`bg-[#FF2B4C] hover:bg-[#FF2B4C]/90 text-white shadow-2xl rounded-full px-6 py-3 ${isMounted ? 'animate-pulse' : ''}`}
-        >
-          <HeadphonesIcon className="w-5 h-5 mr-2" />
-          도움이 필요하신가요?
-        </Button>
-      </div>
-
       {/* Hero Section */}
-      <section className="relative min-h-[70vh] md:min-h-[75vh] lg:min-h-[80vh] py-12 md:py-16 lg:py-20 overflow-hidden">
+      <section className="relative min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-12 md:py-16 lg:py-20 overflow-hidden">
         {/* Video Background */}
         <div className="absolute inset-0">
           <video
@@ -202,37 +166,111 @@ const DITMaintenancePage: NextPage = () => {
             <div className="w-full h-full bg-gray-50"></div>
           </video>
           {/* Video overlay for better text readability */}
-          <div className="absolute inset-0"></div>
+          <div className="absolute inset-0 bg-white/10"></div>
         </div>
+
+        {/* Header - 섹션 안으로 이동 */}
+        <header className="absolute top-0 left-0 right-0 z-50 bg-transparent">
+          <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div>
+                <Image
+                  src="/DIT.svg"
+                  alt="DIT Logo"
+                  width={60}
+                  height={35}
+                  priority
+                />
+              </div>
+            </div>
+            <nav className="hidden md:flex space-x-8 bg-white px-8 py-3 rounded-full shadow-lg">
+              <Link 
+                href="#company" 
+                className="nav-link transition-colors text-[#232324] hover:text-[#FF2B4C]"
+              >
+                회사소개
+              </Link>
+              <Link 
+                href="#services" 
+                className="nav-link transition-colors text-[#232324] hover:text-[#FF2B4C]"
+              >
+                사업소개
+              </Link>
+              <Link 
+                href="#technology" 
+                className="nav-link transition-colors text-[#232324] hover:text-[#FF2B4C]"
+              >
+                사회공헌
+              </Link>
+              <Link 
+                href="#portfolio" 
+                className="nav-link transition-colors text-[#232324] hover:text-[#FF2B4C]"
+              >
+                고객센터
+              </Link>
+            </nav>
+            <Button className="bg-[#232324] hover:bg-[#232324]/90 text-white shadow-lg border-radius-50">
+              문의하기
+            </Button>
+          </div>
+        </header>
         
         {/* Decorative elements (optional - can be removed if video provides enough visual interest) */}
         <div className="absolute top-20 right-20 w-72 h-72 bg-[#FF2B4C]/10 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-20 w-96 h-96 bg-[#FF2B4C]/10 rounded-full blur-3xl"></div>
 
         <div className="container mx-auto px-6 relative z-10 h-full">
-          <div className="flex items-center justify-center min-h-[50vh] text-center">
-            <div className="max-w-4xl mx-auto">
+          <div className="flex items-center min-h-[70vh] pt-20">
+            <div className="max-w-4xl">
               <ScrollAnimation animation="fadeInUp">
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold mb-12 text-white leading-tight">
-                  <span className="text-[#FF2B4C]">Business Value</span><br />
-                  <span className="text-[#232324]">DIT가 이끌어 냅니다</span>
+                <h1 
+                  className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#232324] tracking-wide hero-title"
+                  style={{
+                    lineHeight: '1.2',
+                    marginBottom: '1rem'
+                  }}
+                >
+                  <span className="text-[#FF2B4C]">Business Value</span><br/>
+                  <span className="text-[#232324]">신뢰할 수 있는 파트너, DIT</span>
                 </h1>
+                <p 
+                  className="text-[#232324]/90 mb-8 tracking-wide hero-subtitle"
+                  style={{
+                    fontSize: subtitleFontSize,
+                    fontWeight: '300',
+                    letterSpacing: '-0.07px'
+                  }}
+                >
+                  당신의 비즈니스를 한 단계 더 높이 이끕니다
+                </p>
               </ScrollAnimation>
 
               <ScrollAnimation animation="fadeInUp" delay={200}>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <div className="flex flex-col sm:flex-row gap-4">
                   <Button
                     size="lg"
-                    className="bg-[#232324] hover:bg-[#232324]/90 text-white text-lg px-8 py-4 shadow-lg rounded-full"
+                    className="bg-[#232324] hover:bg-[#232324]/90 text-white text-lg px-8 py-4 shadow-lg rounded-full tracking-wide hero-cta-button"
                   >
-                    솔루션 문의하기
+                    무료 상담 신청
                   </Button>
                 </div>
               </ScrollAnimation>
+
             </div>
           </div>
         </div>
       </section>
+
+      {/* Floating CTA */}
+      <div className="fixed bottom-6 right-6 z-50">
+        <Button
+          size="lg"
+          className={`bg-[#FF2B4C] hover:bg-[#FF2B4C]/90 text-white shadow-2xl rounded-full px-6 py-3 ${isMounted ? 'animate-pulse' : ''}`}
+        >
+          <HeadphonesIcon className="w-5 h-5 mr-2" />
+          도움이 필요하신가요?
+        </Button>
+      </div>
 
       {/* Company Introduction */}
       <section id="company" className="min-h-[90vh] md:min-h-[85vh] lg:min-h-[80vh] py-16 md:py-20 lg:py-24 bg-gray-50">
@@ -557,15 +595,15 @@ const DITMaintenancePage: NextPage = () => {
 
             <div className="grid lg:grid-cols-3 gap-8">
               <ScrollAnimation animation="fadeInUp" delay={100}>
-                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                   <div className="w-16 h-16 bg-[#FF2B4C]/10 rounded-2xl flex items-center justify-center mb-6">
                     <Shield className="w-8 h-8 text-[#FF2B4C]" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-[#232324]">보안 전문성</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-4 flex-grow">
                     ISO 27001 인증 기반의 체계적인 보안 관리와 24시간 보안 모니터링 서비스
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-gray-600 mt-auto">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
                       보안 취약점 진단 및 대응
@@ -579,15 +617,15 @@ const DITMaintenancePage: NextPage = () => {
               </ScrollAnimation>
 
               <ScrollAnimation animation="fadeInUp" delay={200}>
-                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                   <div className="w-16 h-16 bg-[#2CB693]/10 rounded-2xl flex items-center justify-center mb-6">
                     <Clock className="w-8 h-8 text-[#2CB693]" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-[#232324]">신속한 대응</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-4 flex-grow">
                     평균 15분 이내 1차 대응, 4시간 이내 현장 출동으로 비즈니스 중단 최소화
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-gray-600 mt-auto">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
                       24/7 원격 모니터링
@@ -601,15 +639,15 @@ const DITMaintenancePage: NextPage = () => {
               </ScrollAnimation>
 
               <ScrollAnimation animation="fadeInUp" delay={300}>
-                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300">
+                <Card className="p-8 bg-white border-0 shadow-xl hover:shadow-2xl transition-all duration-300 h-full flex flex-col">
                   <div className="w-16 h-16 bg-[#232324]/10 rounded-2xl flex items-center justify-center mb-6">
                     <TrendingUp className="w-8 h-8 text-[#232324]" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-[#232324]">비용 최적화</h3>
-                  <p className="text-gray-600 mb-4">
+                  <p className="text-gray-600 mb-4 flex-grow">
                     예방 정비를 통한 장애 사전 차단으로 총 운영비용(TCO) 30% 절감 효과
                   </p>
-                  <ul className="space-y-2 text-sm text-gray-600">
+                  <ul className="space-y-2 text-sm text-gray-600 mt-auto">
                     <li className="flex items-center">
                       <CheckCircle className="w-4 h-4 text-[#2CB693] mr-2" />
                       예측 기반 유지보수

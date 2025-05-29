@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, "Segoe UI", Roboto, "Helvetica Neue", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Microsoft YaHei", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
 }
 
 @layer utilities {
@@ -156,4 +156,72 @@ h2 {
 
 .animate-spin-reverse {
   animation: spin 15s linear infinite reverse;
+}
+
+/* Rotating text animation for hero section */
+@keyframes fadeInOut {
+  0%, 20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  25%, 95% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.rotating-text {
+  position: relative;
+  display: inline-block;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.rotating-text span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  animation: fadeInOut 15s infinite;
+}
+
+.rotating-text span:nth-child(1) { animation-delay: 0s; }
+.rotating-text span:nth-child(2) { animation-delay: 3s; }
+.rotating-text span:nth-child(3) { animation-delay: 6s; }
+.rotating-text span:nth-child(4) { animation-delay: 9s; }
+.rotating-text span:nth-child(5) { animation-delay: 12s; }
+
+@layer components {
+  /* Hero section custom styles */
+  .hero-title {
+    line-height: 1.2 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .hero-subtitle {
+    font-size: 17px !important;
+    font-weight: 300 !important;
+    letter-spacing: -0.07px !important;
+  }
+
+  .hero-cta-button {
+    font-weight: 400 !important;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      font-size: 19px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-subtitle {
+      font-size: 21px !important;
+    }
+  }
 }
